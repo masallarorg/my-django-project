@@ -1,0 +1,86 @@
+{% extends "base.html" %}
+
+{% block title %}
+{{ story.title }} - Çocuk Hikayeleri
+{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-8">
+            <div class="card mb-5">
+                <h1 class="card-title">{{ story.title }}</h1>
+                   <!-- Sesli Hikaye -->
+            {% if story.audio_file %}
+            <div class="audio-player mt-4 mb-4">
+                <h3>Hikayeyi Dinle</h3>
+                <audio controls>
+                    <source src="{{ story.audio_file.url }}" type="audio/mpeg">
+                    Tarayıcınız bu ses formatını desteklemiyor.
+                </audio>
+            </div>
+            {% else %}
+            <p>Bu hikayenin henüz sesli versiyonu mevcut değil.</p>
+            {% endif %}
+                <img src="{{ story.cover_image.url }}" alt="{{ story.title }}" class="img-fluid">
+                <p>{{ story.content }}</p>
+            </div>
+
+         
+
+            <!-- Önceki ve Sonraki Hikayeler -->
+            <div class="d-flex justify-content-between mb-4">
+                {% if previous_story %}
+                <a href="{% url 'story_detail' previous_story.slug %}" class="btn btn-outline-primary">← Önceki Hikaye: {{ previous_story.title }}</a>
+                {% else %}
+                <span></span>
+                {% endif %}
+                
+                {% if next_story %}
+                <a href="{% url 'story_detail' next_story.slug %}" class="btn btn-outline-primary">Sonraki Hikaye: {{ next_story.title }} →</a>
+                {% endif %}
+            </div>
+
+            <!-- Yorumlar -->
+            <div class="comments mt-5">
+                <h3>Yorumlar</h3>
+                {% for comment in comments %}
+                <div class="comment mb-4">
+                    <strong>{{ comment.author.username }}</strong> - <small>{{ comment.created_at }}</small>
+                    <p>{{ comment.content }}</p>
+                </div>
+                {% empty %}
+                <p>Henüz yorum yok.</p>
+                {% endfor %}
+            </div>
+
+            <!-- Sayfalama -->
+            <div class="pagination">
+                <span class="step-links">
+                    {% if comments.has_previous %}
+                        <a href="?page={{ comments.previous_page_number }}">Önceki</a>
+                    {% endif %}
+
+                    <span class="current">
+                        Sayfa {{ comments.number }} / {{ comments.paginator.num_pages }}.
+                    </span>
+
+                    {% if comments.has_next %}
+                        <a href="?page={{ comments.next_page_number }}">Sonraki</a>
+                    {% endif %}
+                </span>
+            </div>
+
+            <!-- Yorum Formu -->
+            <div class="comment-form mt-5">
+                <h3>Yorum Yap</h3>
+                <form method="post">
+                    {% csrf_token %}
+                    {{ form.as_p }}
+                    <button type="submit" class="btn btn-primary">Gönder</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

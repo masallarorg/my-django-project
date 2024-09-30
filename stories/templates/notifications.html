@@ -1,0 +1,24 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h2>Bildirimler</h2>
+<ul>
+    {% for notification in notifications %}
+        <li>{{ notification.message }} - {{ notification.created_at }}</li>
+    {% empty %}
+        <li>Hiç bildiriminiz yok.</li>
+    {% endfor %}
+</ul>
+{% endblock %}
+
+
+{% for notification in notification_page_obj %}
+<li class="list-group-item d-flex justify-content-between align-items-center">
+    <span>{{ notification.message }}</span>
+    <span class="badge bg-warning rounded-pill">{{ notification.created_at|date:"d M Y" }}</span>
+    <form action="{% url 'delete_notification' notification.id %}" method="post" style="display:inline;">
+        {% csrf_token %}
+        <button type="submit" class="btn btn-sm btn-danger">Sil</button>
+    </form>
+</li>
+{% endfor %}

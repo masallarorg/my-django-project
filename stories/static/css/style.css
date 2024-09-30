@@ -1,0 +1,175 @@
+/* Genel Sayfa Ayarları */
+body {
+    font-family: 'Comic Sans MS', cursive, sans-serif; /* Eğlenceli bir font */
+    background-color: #f9f9f9; /* Açık arka plan rengi */
+    color: #333; /* Yumuşak siyah yazı rengi */
+    margin: 0;
+    padding: 0;
+}
+
+/* Genel Başlık Ayarları */
+h1, h2, h3 {
+    font-size: 2rem; /* Büyük başlıklar */
+    color: #ff6347; /* Sıcak turuncu */
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+/* Genel Paragraf Ayarları */
+p {
+    font-size: 22px; /* Yazı boyutunu büyüt */
+    line-height: 1.8; /* Satır aralarını açarak daha okunaklı hale getir */
+    margin-top: 10px;
+    color: #333; /* Yumuşak siyah tonu */
+}
+
+/* Butonlar */
+.btn-primary {
+    background-color: #ff69b4; /* Parlak pembe */
+    border: none;
+    padding: 10px 20px;
+    font-size: 18px;
+    border-radius: 5px;
+}
+
+.btn-primary:hover {
+    background-color: #ff1493; /* Daha koyu pembe */
+}
+
+/* Kartlar */
+.card {
+    background-color: #fff;
+    border: none;
+    border-radius: 15px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1); /* Hafif gölge */
+    margin-bottom: 20px;
+    padding: 20px;
+    transition: transform 0.3s ease; /* Hover animasyonu */
+}
+
+.card:hover {
+    transform: scale(1.05); /* Hover büyüme efekti */
+}
+
+/* Kart başlığı için font boyutunu artırma */
+.card-title {
+    font-size: 28px;
+    color: #ff4500;
+}
+/* Resim Ayarları */
+img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px; /* Köşeleri yuvarlatma */
+    margin-bottom: 30px; /* Resim ve yazı arasında 30px boşluk bırak */
+}
+
+/* Sayfalama */
+.pagination {
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.pagination .page-item .page-link {
+    color: #ff69b4;
+    border: 1px solid #ff69b4;
+}
+
+.pagination .page-item.active .page-link {
+    background-color: #ff69b4;
+    border-color: #ff69b4;
+}
+.navbar-brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+}
+
+.nav-link {
+    font-size: 1.1rem;
+}
+
+.navbar .btn {
+    margin-left: 10px;
+}
+
+h1, h3 {
+    font-family: 'Comic Sans MS', sans-serif;
+    color: #ff6347;
+}
+
+.card-header {
+    font-size: 1.5rem;
+    text-align: center;
+}
+
+.card-body p {
+    font-size: 1.2rem;
+}
+
+.list-group-item {
+    background-color: #fff5e1;
+}
+
+.badge {
+    font-size: 0.9rem;
+}
+
+.pagination .page-link {
+    background-color: #f0f0f0;
+    color: #555;
+}
+
+.pagination .page-link:hover {
+    background-color: #ffc107;
+    color: #fff;
+}
+
+.btn-danger {
+    font-size: 0.8rem;
+}
+footer {
+    background-color: #f39c12;
+    color: #ffffff;
+    padding-top: 20px;
+}
+
+footer h5 {
+    font-family: 'Comic Sans MS', sans-serif;
+    font-size: 1.3rem;
+    color: #fff;
+    margin-bottom: 1rem;
+}
+
+footer p {
+    font-size: 1rem;
+    margin: 0.5rem 0;
+}
+
+.social-icons a {
+    color: #fff;
+    transition: color 0.3s ease-in-out;
+}
+
+.social-icons a:hover {
+    color: #ffeb3b;
+}
+
+footer i {
+    margin-right: 10px;
+}
+
+footer .fa {
+    margin-right: 10px;
+}
+
+footer .fa-2x {
+    font-size: 1.8rem;
+}
+
+footer .text-white:hover {
+    color: #f1c40f;
+}
+
+footer a {
+    text-decoration: none;
+}

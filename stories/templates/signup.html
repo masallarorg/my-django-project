@@ -1,0 +1,64 @@
+{% extends "base.html" %}
+
+{% block title %}Üye Ol{% endblock %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="row justify-content-center">
+        <div class="col-md-5">
+            <div class="card shadow-sm p-4">
+                <h2 class="mb-4 text-center">Üye Ol</h2>
+                <form method="post">
+                    {% csrf_token %}
+                    <!-- Kullanıcı adı alanı -->
+                    <div class="form-group mb-3">
+                        {{ form.username.label_tag }}
+                        {{ form.username }}
+                        {% if form.username.errors %}
+                            <div class="text-danger">
+                                {{ form.username.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Email alanı -->
+                    <div class="form-group mb-3">
+                        {{ form.email.label_tag }}
+                        {{ form.email }}
+                        {% if form.email.errors %}
+                            <div class="text-danger">
+                                {{ form.email.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Şifre alanı -->
+                    <div class="form-group mb-3">
+                        {{ form.password1.label_tag }}
+                        {{ form.password1 }}
+                        {% if form.password1.errors %}
+                            <div class="text-danger">
+                                {{ form.password1.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Şifre tekrar alanı -->
+                    <div class="form-group mb-3">
+                        {{ form.password2.label_tag }}
+                        {{ form.password2 }}
+                        {% if form.password2.errors %}
+                            <div class="text-danger">
+                                {{ form.password2.errors }}
+                            </div>
+                        {% endif %}
+                    </div>
+
+                    <!-- Gönderme butonu -->
+                    <button type="submit" class="btn btn-primary w-100">Kayıt Ol</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

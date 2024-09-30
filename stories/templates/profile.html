@@ -1,0 +1,179 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <div class="profile-header text-center mb-5">
+        <h1 class="display-4 text-primary">Merhaba, {{ user.username }}!</h1>
+        <p class="lead text-muted">Burada okuduğun hikayeler, yorumların ve bildirimlerin görüntülenir.</p>
+    </div>
+
+    <!-- Rozetler -->
+    <div class="card mb-4">
+        <div class="card-header bg-info text-white">
+            <h3>Rozetler</h3>
+        </div>
+        <div class="card-body">
+            {% if user_badges %}
+            <ul class="list-group">
+                {% for user_badge in user_badges %}
+                <li class="list-group-item">
+                    <img src="{{ user_badge.badge.icon.url }}" alt="{{ user_badge.badge.name }}" class="badge-icon" width="50">
+                    <strong>{{ user_badge.badge.name }}</strong> - {{ user_badge.badge.description }}
+                </li>
+                {% endfor %}
+            </ul>
+            {% else %}
+            <p>Henüz rozet kazanmadınız.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Profil Bilgileri ve Güncelleme Formu -->
+    <div class="card mb-5 shadow-sm">
+        <div class="card-header bg-info text-white">
+            <h3>Profil Bilgileri</h3>
+        </div>
+        <div class="card-body">
+            <form method="POST">
+                {% csrf_token %}
+                {{ update_form.as_p }}
+                <button type="submit" name="update_profile" class="btn btn-success">Bilgileri Güncelle</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Okunan Hikayeler -->
+    <div class="card mb-5 shadow-sm">
+        <div class="card-header bg-primary text-white">
+            <h3><i class="fa fa-book"></i> Okuduğun Hikayeler</h3>
+        </div>
+        <div class="card-body">
+            {% if story_page_obj %}
+            <ul class="list-group list-group-flush">
+                {% for story in story_page_obj %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <span>{{ story.story.title }}</span>
+                    <span class="badge bg-primary rounded-pill">{{ story.read_at|date:"d M Y" }}</span>
+                    <form action="{% url 'delete_story' story.id %}" method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-sm btn-danger">Sil</button>
+                    </form>
+                </li>
+                {% endfor %}
+            </ul>
+            <!-- Sayfalama -->
+            <nav aria-label="Story pagination">
+                <ul class="pagination justify-content-center mt-3">
+                    {% if story_page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?story_page={{ story_page_obj.previous_page_number }}">Önceki</a>
+                    </li>
+                    {% endif %}
+                    {% if story_page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?story_page={{ story_page_obj.next_page_number }}">Sonraki</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+            {% else %}
+            <p class="text-center">Henüz hikaye okumadınız.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Yorumlar -->
+    <div class="card mb-5 shadow-sm">
+        <div class="card-header bg-success text-white">
+            <h3><i class="fa fa-comment"></i> Yorumların</h3>
+        </div>
+        <div class="card-body">
+            {% if comment_page_obj %}
+            <ul class="list-group list-group-flush">
+                {% for comment in comment_page_obj %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <span>{{ comment.story.title }} - {{ comment.content }}</span>
+                    <span class="badge bg-success rounded-pill">{{ comment.created_at|date:"d M Y" }}</span>
+                    <form action="{% url 'delete_comment' comment.id %}" method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-sm btn-danger">Sil</button>
+                    </form>
+                </li>
+                {% endfor %}
+            </ul>
+            <!-- Sayfalama -->
+            <nav aria-label="Comment pagination">
+                <ul class="pagination justify-content-center mt-3">
+                    {% if comment_page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?comment_page={{ comment_page_obj.previous_page_number }}">Önceki</a>
+                    </li>
+                    {% endif %}
+                    {% if comment_page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?comment_page={{ comment_page_obj.next_page_number }}">Sonraki</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+            {% else %}
+            <p class="text-center">Henüz yorum yapmadınız.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Bildirimler -->
+    <div class="card mb-5 shadow-sm">
+        <div class="card-header bg-warning text-white">
+            <h3><i class="fa fa-bell"></i> Bildirimlerin</h3>
+        </div>
+        <div class="card-body">
+            {% if notification_page_obj %}
+            <ul class="list-group list-group-flush">
+                {% for notification in notification_page_obj %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <span>{{ notification.message }}</span>
+                    <span class="badge bg-warning rounded-pill">{{ notification.created_at|date:"d M Y" }}</span>
+                    <form action="{% url 'delete_notification' notification.id %}" method="post" style="display:inline;">
+                        {% csrf_token %}
+                        <button type="submit" class="btn btn-sm btn-danger">Sil</button>
+                    </form>
+                </li>
+                {% endfor %}
+            </ul>
+            <!-- Sayfalama -->
+            <nav aria-label="Notification pagination">
+                <ul class="pagination justify-content-center mt-3">
+                    {% if notification_page_obj.has_previous %}
+                    <li class="page-item">
+                        <a class="page-link" href="?notification_page={{ notification_page_obj.previous_page_number }}">Önceki</a>
+                    </li>
+                    {% endif %}
+                    {% if notification_page_obj.has_next %}
+                    <li class="page-item">
+                        <a class="page-link" href="?notification_page={{ notification_page_obj.next_page_number }}">Sonraki</a>
+                    </li>
+                    {% endif %}
+                </ul>
+            </nav>
+            {% else %}
+            <p class="text-center">Henüz bildirim yok.</p>
+            {% endif %}
+        </div>
+    </div>
+
+    <!-- Üyelik İptal Formu -->
+    <div class="card mb-5 shadow-sm">
+        <div class="card-header bg-danger text-white">
+            <h3>Üyeliği İptal Et</h3>
+        </div>
+        <div class="card-body">
+            <form method="POST">
+                {% csrf_token %}
+                {{ delete_form.as_p }}
+                <button type="submit" name="delete_account" class="btn btn-danger">Üyeliği Sil</button>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
