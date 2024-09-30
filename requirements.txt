@@ -137,9 +137,9 @@ sqlparse==0.4.4
 sympy==1.13.2
 threadpoolctl==3.5.0
 tokenizers==0.19.1
-torch==2.0.1
-torchaudio==2.0.1
-torchvision==0.15.1
+torchtorch==2.3.1
+torchaudio==2.3.1
+torchvision=2.3.1
 tqdm==4.66.4
 transformers==4.44.2
 trio==0.26.0
